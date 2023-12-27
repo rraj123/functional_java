@@ -94,6 +94,6 @@ class PlayfulPets
             }
         };
         matchPet("Poodles",breedMatcher,new Pet(null, "dog", "poodle", null, 0.0));
-//        matchPet("Pets for $800 or less",priceMatcher, new Pet(null, null, null, null, 800.0));
+        matchPet("Pets for $800 or less",priceMatcher, new Pet(null, null, null, null, 800.0));
     }
 }
