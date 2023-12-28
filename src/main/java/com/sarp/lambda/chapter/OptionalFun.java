@@ -1,5 +1,6 @@
 package com.sarp.lambda.chapter;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 class Author {
     private String name;
@@ -45,24 +46,40 @@ class Library {
 
 public class OptionalFun {
 
-        public static void main(String[] args) {
-            // Create an Author with a name
-            Author author = new Author("John Doe");
+    public static String removeVowels(String s)
+    {
+        return s.replaceAll("[aeiou]","");
+    }
 
-            // Create a Book with a title and an Author
-            Book book = new Book("Java Programming", Optional.of(author));
-            Book book1 = new Book("Java Programming with Optional", Optional.ofNullable(null));
+    public static void main(String[] args) {
+        // Create an Author with a name
+        Author author = new Author("John Doe");
 
-            // Create a Library with a Book
-            Library library = new Library(Optional.of(book));
-            Library library1 = new Library(Optional.of(book1));
+        // Create a Book with a title and an Author
+        Book book = new Book("Java Programming", Optional.of(author));
+        Book book1 = new Book("Java Programming with Optional", Optional.ofNullable(null));
 
-            // Use flatMap to safely access the author's name in a nested structure
-            String authorName = library1.getBook()
-                    .flatMap(Book::getAuthor)
-                    .map(Author::getName)
-                    .orElse("Unknown Author");
+        // Create a Library with a Book
+        Library library = new Library(Optional.of(book));
+        Library library1 = new Library(Optional.of(book1));
 
-            System.out.println("Author's Name: " + authorName);
-        }
+        // Use flatMap to safely access the author's name in a nested structure
+        String authorName = library1.getBook()
+                .flatMap(Book::getAuthor)
+                .map(Author::getName)
+                .orElse("Unknown Author");
+
+        System.out.println("Author's Name: " + authorName);
+
+
+        Stream.of(1, 2, 3, 4, 5)                      // Stream(Integer)
+                .reduce((x, y) -> x * y)               // Optional(Integer)
+                .ifPresent(x -> System.out.println(x));
+
+        Stream.of("Kyle", "Jaquiline", "Jimmy")     // Stream<String>
+                .min( (x,y) ->                        // Optional<String>
+                        removeVowels(x).compareTo(removeVowels(y)))
+                .ifPresent(x -> System.out.println(x));
+
+    }
 }
